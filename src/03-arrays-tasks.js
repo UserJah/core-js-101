@@ -150,17 +150,10 @@ function getStringsLength(arr) {
  *    [ 1, 3, 4, 5 ], 2, 1  => [ 1, 2, 3, 4, 5 ]
  *    [ 1, 'b', 'c'], 0, 'x'  => [ 'x', 1, 'b', 'c' ]
  */
-function insertItem(/* arr, item, index */) {
-/*   if (index === 0) {
-    return arr.unshift(item);
-  }
-  if (index === item.length - 1) {
-    return arr.push(item);
-  }
-  const slisedArr = arr.slice(0, index);
-  slisedArr.push(item);
-  return slisedArr.concat(arr.slice(index)); */
-  throw new Error('Not implemented');
+function insertItem(arr, item, index) {
+  const tail = arr.splice(index, arr.length);
+  arr.push(item);
+  tail.map((el) => arr.push(el));
 }
 
 /**
@@ -516,13 +509,8 @@ function getIntervalArray(start, end) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(arr) {
-  return arr.map((item, idx) => {
-    if (arr.filter((item1) => item1).length !== 1) {
-      arr.splice(idx, 1);
-    }
-    return item;
-  });
+function distinct(/* arr */) {
+  throw new Error('Not implemented');
 }
 
 /**
@@ -573,8 +561,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.flat().map(childrenSelector);
 }
 
 
