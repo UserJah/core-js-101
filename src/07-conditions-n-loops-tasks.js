@@ -187,8 +187,14 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  for (let i = 0; i < str.length; i += 1) {
+    const c = str.charAt(i);
+    if (str.indexOf(c) === i && str.indexOf(c, i + 1) === -1) {
+      return c;
+    }
+  }
+  return null;
 }
 
 
@@ -214,8 +220,21 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  let a1 = a;
+  let b1 = b;
+  if (a > b) {
+    a1 = b;
+    b1 = a;
+  }
+  if (isStartIncluded && isEndIncluded) {
+    return `[${a1}, ${b1}]`;
+  } if (isStartIncluded && !isEndIncluded) {
+    return `[${a1}, ${b1})`;
+  } if (!isStartIncluded && isEndIncluded) {
+    return `(${a1}, ${b1}]`;
+  }
+  return `(${a1}, ${b1})`;
 }
 
 
@@ -231,8 +250,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -248,8 +267,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return String(num).split('').reverse().join('');
 }
 
 
@@ -291,8 +310,12 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const total = String(num).split('').reduce((sum, val) => Number(sum) + Number(val), 0);
+  if (String(total).length > 1) {
+    return String(total).split('').reduce((sum, val) => Number(sum) + Number(val), 0);
+  }
+  return total;
 }
 
 
@@ -342,8 +365,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return Number(num).toString(n);
 }
 
 
@@ -359,8 +382,41 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = [];
+  let mainPath = pathes[0];
+  let secondPath = pathes[0];
+  pathes.forEach((el) => {
+    if (el.length < mainPath.length) {
+      mainPath = el;
+    }
+    if (el.length > secondPath.length) {
+      secondPath = el;
+    }
+  });
+
+  for (let i = 0; i < mainPath.length; i += 1) {
+    const tmp = mainPath[i];
+    arr.push(tmp);
+    const resLength = arr.length;
+    for (let j = 0; j < pathes.length; j += 1) {
+      if (pathes[j][i] !== tmp) {
+        arr.pop();
+        break;
+      }
+    }
+    if (resLength !== arr.length) {
+      break;
+    }
+  }
+
+  const array = arr.join('');
+  let result = array;
+  if (result.length > 1) {
+    result = array.split('/');
+    return `${result.slice(0, result.length - 1).join('/')}/`;
+  }
+  return result;
 }
 
 
